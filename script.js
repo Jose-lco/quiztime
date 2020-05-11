@@ -53,7 +53,7 @@ function render() {
     listofChoices.textContent = choice;
     options.appendChild(listofChoices);
   })
-  document.addEventListener("click", function () {
+  document.addEventListener("click", "#options" function () {
     currentQuestion++
   });
 }
