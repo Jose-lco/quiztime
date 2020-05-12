@@ -53,9 +53,9 @@ function render() {
     listofChoices.textContent = choice;
     options.appendChild(listofChoices);
   })
+}
   document.addEventListener("click", "#options", function (event) {
     event.preventDefault()
     currentQuestion++
     render();
   });
-}
