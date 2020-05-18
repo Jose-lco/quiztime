@@ -49,7 +49,7 @@ function render() {
   options.textContent = "";
   questionChoices.forEach(function (choice) {
     let listofChoices = document.createElement("button");
-    options.classList.add("d-flex flex-column");
+    options.classList.add("d-flex", "flex-column");
     listofChoices.textContent = choice;
     options.appendChild(listofChoices);
   })
