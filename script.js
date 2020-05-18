@@ -54,8 +54,8 @@ function render() {
     options.appendChild(listofChoices);
   })
 }
-  document.addEventListener("click", "#options", function (event) {
-    event.preventDefault()
+  $(document).on("click", "#options", function (event) {
+    event.preventDefault();
     currentQuestion++
-    render();
+    render()
   });
