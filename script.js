@@ -1,9 +1,9 @@
-//add event listeners to all elements that will be manipulated in JS.
 const startQuiz = document.querySelector("#startQuiz");
 const highScores = document.querySelector("#highScores");
 let question = document.querySelector("#question");
 let options = document.querySelector("#options");
 let timer = document.querySelector("#timer");
+let myScores = document.querySelector("#my-scores");
 
 //put all the quiz data in an array of objects.
 let quizQuestions = [
@@ -28,21 +28,10 @@ let quizQuestions = [
     answer: "Document Object Model"
   },
 ];
+let score = 0;
 let currentQuestion = 0;
-let timeLeft = 10;
-startQuiz.addEventListener("click", function () {
-  startQuiz.style.display = "none";
-  let timerInterval = setInterval(function () {
-    timer.textContent = `Time: ${timeLeft} seconds`;
-    timeLeft--
-    if (timeLeft < 0) {
-      clearInterval(timerInterval);
-    }
-  }, 1000)
-  render();
-})
-//keep track of which question is displayed on the webpage.
-function render() {
+let timeLeft = 20;
+let displayQuiz = function () {
   let questionData = quizQuestions[currentQuestion];
   question.textContent = questionData.que;
   let questionChoices = questionData.choices;
@@ -53,9 +42,40 @@ function render() {
     listofChoices.textContent = choice;
     options.appendChild(listofChoices);
   })
+};
+let displayHighScores = function () {
+  question.textContent = "";
+  options.textContent = "";
+  myScores.style.display = "block";
+  startQuiz.style.display = "none";
 }
-  $(document).on("click", "#options", function (event) {
-    event.preventDefault();
-    currentQuestion++
-    render()
-  });
+startQuiz.addEventListener("click", function () {
+  startQuiz.style.display = "none";
+  let timerInterval = setInterval(function () {
+    timer.textContent = `Time: ${timeLeft} seconds`;
+    timeLeft--
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+    }
+  }, 1000)
+  displayQuiz();
+})
+//keep track of which question is displayed on the webpage.
+$(document).on("click", "#options", function (event) {
+  event.preventDefault();
+  if (event.target.textContent !== quizQuestions[currentQuestion].answer) {
+    timeLeft -= 2;
+  } else {
+    score += 25;
+  }
+  currentQuestion++
+  if (currentQuestion === quizQuestions.length) {
+    displayHighScores();
+    return score;
+  }
+  displayQuiz();
+});
+$(document).on("click", "#highScores", function (event) {
+  event.preventDefault();
+  displayHighScores();
+});
